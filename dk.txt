@@ -1,0 +1,36 @@
+V = int(input("Enter number of vertices: "))
+
+graph = []
+print("Enter adjacency matrix row by row:")
+
+for i in range(V):
+    row = list(map(int, input().split()))
+    while len(row) != V:
+        print("Enter", V, "numbers")
+        row = list(map(int, input().split()))
+    graph.append(row)
+
+source = int(input("Enter source vertex: "))
+
+dist = [999]*V
+visited = [False]*V
+dist[source] = 0
+
+for i in range(V):
+
+    min_val = 999
+    for j in range(V):
+        if not visited[j] and dist[j] < min_val:
+            min_val = dist[j]
+            u = j
+
+    visited[u] = True
+
+    for v in range(V):
+        if graph[u][v] > 0 and not visited[v]:
+            if dist[v] > dist[u] + graph[u][v]:
+                dist[v] = dist[u] + graph[u][v]
+
+print("Vertex Distance")
+for i in range(V):
+    print(i, dist[i])
